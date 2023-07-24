@@ -21,6 +21,17 @@ ul {
   align-items: center;
   justify-content: center;
   margin: 10% auto;
+  position: relative;
+}
+
+.container .roundMeter {
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 .game {
@@ -44,22 +55,18 @@ ul {
 }
 
 .game .colors .red {
-  /* background-color: #f55f5c; */
   background-color: #993d32;
   border-top-left-radius: 100%;
 }
 .game .colors .green {
-  /* background-color: #45f57c; */
   background-color: #3a993a;
   border-top-right-radius: 100%;
 }
 .game .colors .yellow {
-  /* background-color: #f5db76; */
   background-color: #998132;
   border-bottom-left-radius: 100%;
 }
 .game .colors .blue {
-  /* background-color: #515af5; */
   background-color: #326d99;
   border-bottom-right-radius: 100%;
 }
@@ -105,4 +112,10 @@ ul {
 
 .container button:hover {
   background-color: rgba(255, 255, 255, 0.166);
+}
+
+.container .message {
+  color: white;
+  margin-top: 20px;
+  font-size: 40px;
 }
