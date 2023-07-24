@@ -34,6 +34,9 @@ function startGame() {
 }
 
 function prepareSequence() {
+  Array.from(colors.children).forEach((element) => {
+    element.style.cursor = "auto";
+  });
   clickable = false;
   for (let i = 0; i < round * 2; i++) {
     let randColorId = Math.floor(Math.random() * 4);
@@ -55,7 +58,11 @@ function showSequence() {
   }, 1000);
 
   setTimeout(() => {
+    message.style.color = "white";
     message.textContent = "Go!";
+    Array.from(colors.children).forEach((element) => {
+      element.style.cursor = "pointer";
+    });
   }, 1500 * round * 2);
 }
 
