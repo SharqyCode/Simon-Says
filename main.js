@@ -43,6 +43,7 @@ function prepareSequence() {
   showSequence();
 }
 
+let isplaying = false;
 function showSequence() {
   let i = 0;
   let flashSequence = setInterval(() => {
@@ -52,7 +53,10 @@ function showSequence() {
       clearInterval(flashSequence);
     }
   }, 1000);
-  clickable = true;
+
+  setTimeout(() => {
+    message.textContent = "Go!";
+  }, 1500 * round * 2);
 }
 
 function flashColor(colorID) {
@@ -88,26 +92,24 @@ function flashColor(colorID) {
 }
 
 function handleColorClick(e) {
-  if (clickable == true) {
-    console.log(e.target.id);
-    flashColor(+e.target.id);
-    if (e.target.id == sequence[0]) {
-      sequence.shift();
-    }
-    clicks--;
+  console.log(e.target.id);
+  flashColor(+e.target.id);
+  if (e.target.id == sequence[0]) {
+    sequence.shift();
+  }
+  clicks--;
 
-    if (clicks == 0) {
-      clickable = false;
-      if (sequence.length == 0) {
+  if (clicks == 0) {
+    clickable = false;
+    if (sequence.length == 0) {
+      setTimeout(() => {
+        message.textContent = "Next Round!";
         setTimeout(() => {
-          message.textContent = "Next Round!";
-          setTimeout(() => {
-            nextRound();
-          }, 3000);
-        }, 300);
-      } else {
-        endGame();
-      }
+          nextRound();
+        }, 3000);
+      }, 300);
+    } else {
+      endGame();
     }
   }
 }
