@@ -46,7 +46,6 @@ function prepareSequence() {
   showSequence();
 }
 
-let isplaying = false;
 function showSequence() {
   let i = 0;
   let flashSequence = setInterval(() => {
@@ -86,7 +85,7 @@ function flashColor(colorID) {
         "0px 0px 5px 5px #fff, 0px 0px 20px 7px #FFD754";
       break;
     case 3:
-      currentColor.style.backgroundColor = "##54B5FF";
+      currentColor.style.backgroundColor = "#54B5FF";
       currentColor.style.boxShadow =
         "0px 0px 5px 5px #fff, 0px 0px 20px 7px #54B5FF";
       break;
