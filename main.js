@@ -18,22 +18,23 @@ let round; // round number - increases when player wins, determines the difficul
 let score; // Player score - increases when chosen colors match round preset colors - starts as zero each game
 let clicks; // the number of clicks allowed for the user each round - same as sequence length
 let sequence = []; // Current pattern of preset colors
-let gameOn = false; // Indicates whether game has started
+let clickable = false; // Indicates whether game has started
+let colorChanging = false; // Indicates whether the "glow" animation is playing
 
 function startGame() {
-  gameOn = true;
   sequence = [];
   score = 0;
   round = 1;
   roundMeter.textContent = `Round: ${round}`;
   message.textContent = "";
 
-  startBtn.textContent = "Start";
+  startBtn.style.visibility = "hidden";
 
   prepareSequence();
 }
 
 function prepareSequence() {
+  clickable = false;
   for (let i = 0; i < round * 2; i++) {
     let randColorId = Math.floor(Math.random() * 4);
     sequence.push(randColorId);
@@ -51,6 +52,7 @@ function showSequence() {
       clearInterval(flashSequence);
     }
   }, 1000);
+  clickable = true;
 }
 
 function flashColor(colorID) {
@@ -59,19 +61,23 @@ function flashColor(colorID) {
   switch (colorID) {
     case 0:
       currentColor.style.backgroundColor = "#FF6454";
-      currentColor.style.boxShadow = "0px 0px 5px 4px white";
+      currentColor.style.boxShadow =
+        "0px 0px 5px 5px #fff, 0px 0px 20px 7px #FF6454";
       break;
     case 1:
       currentColor.style.backgroundColor = "#61FF61";
-      currentColor.style.boxShadow = "0px 0px 5px 4px white";
+      currentColor.style.boxShadow =
+        "0px 0px 5px 5px #fff, 0px 0px 20px 7px #61FF61";
       break;
     case 2:
       currentColor.style.backgroundColor = "#FFD754";
-      currentColor.style.boxShadow = "0px 0px 5px 4px white";
+      currentColor.style.boxShadow =
+        "0px 0px 5px 5px #fff, 0px 0px 20px 7px #FFD754";
       break;
     case 3:
       currentColor.style.backgroundColor = "##54B5FF";
-      currentColor.style.boxShadow = "0px 0px 5px 4px white";
+      currentColor.style.boxShadow =
+        "0px 0px 5px 5px #fff, 0px 0px 20px 7px #54B5FF";
       break;
   }
 
@@ -82,21 +88,23 @@ function flashColor(colorID) {
 }
 
 function handleColorClick(e) {
-  if (gameOn == true) {
-    flashColor(e.target.id);
+  if (clickable == true) {
+    console.log(e.target.id);
+    flashColor(+e.target.id);
     if (e.target.id == sequence[0]) {
       sequence.shift();
     }
     clicks--;
 
     if (clicks == 0) {
+      clickable = false;
       if (sequence.length == 0) {
-        message.textContent = "Congrats! You win this round!";
         setTimeout(() => {
-          message.textContent = "";
-          message.style.color = "white";
-          nextRound();
-        }, 3000);
+          message.textContent = "Next Round!";
+          setTimeout(() => {
+            nextRound();
+          }, 3000);
+        }, 300);
       } else {
         endGame();
       }
@@ -105,6 +113,8 @@ function handleColorClick(e) {
 }
 
 function nextRound() {
+  message.textContent = "";
+  message.style.color = "white";
   round++;
   score++;
   scoreBoard.textContent = score;
@@ -118,9 +128,9 @@ function endGame() {
   score = 0;
   scoreBoard.textContent = score;
   sequence = [];
-  gameOn = false;
   message.textContent = "Better Luck Next Time...Retry?";
   message.style.color = "red";
+  startBtn.style.visibility = "visible";
   startBtn.textContent = "Retry";
 }
 
